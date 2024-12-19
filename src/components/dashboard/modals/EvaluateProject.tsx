@@ -79,9 +79,7 @@ const EvaluateProject = ({ isOpen, onClose }: EvaluateProjectProps) => {
         );
 
         if (selectedSimulator) {
-          if (
-            selectedSimulator.nombre === "TRL, BRL, CRL"
-          ) {
+          if (selectedSimulator.nombre === "TRL, BRL, CRL") {
             updatedData.parametros = JSON.stringify({
               TRL: null,
               BRL: null,
@@ -135,7 +133,7 @@ const EvaluateProject = ({ isOpen, onClose }: EvaluateProjectProps) => {
           },
           body: JSON.stringify({
             usuario_id: projectData.usuario_id,
-            proyecto_id: parseInt(projectData.proyecto_id, 10),
+            proyecto_id: parseInt(projectData.proyecto_id.toString(), 10),
             simulacion_id: simulacionData.simulacion.id,
             resultado: projectData.resultado,
           }),
@@ -156,9 +154,13 @@ const EvaluateProject = ({ isOpen, onClose }: EvaluateProjectProps) => {
 
       if (selectedSimulator) {
         if (selectedSimulator.nombre === "TRL, BRL, CRL") {
-          navigate(`/dashboard/evaluation/trl-brl-crl/${evaluacionData.evaluacion.id}`);
+          navigate(
+            `/dashboard/evaluation/trl-brl-crl/${evaluacionData.evaluacion.id}`
+          );
         } else {
-          navigate(`/dashboard/evaluation/other/${evaluacionData.evaluacion.id}`);
+          navigate(
+            `/dashboard/evaluation/other/${evaluacionData.evaluacion.id}`
+          );
         }
       }
 
@@ -171,7 +173,10 @@ const EvaluateProject = ({ isOpen, onClose }: EvaluateProjectProps) => {
   };
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+    <Dialog.Root
+      open={isOpen}
+      onOpenChange={onClose} /// <reference path="./EvaluateProject.tsx" />
+    >
       <Dialog.Portal forceMount>
         <AnimatePresence mode="popLayout">
           {isOpen && (

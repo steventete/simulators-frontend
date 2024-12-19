@@ -23,18 +23,18 @@ const ProgressChart = ({ data }: ProgressChartProps) => {
         <Line
           type="monotone"
           dataKey="trl"
-          stroke="#8884d8"
+          stroke="#16A34A"
           activeDot={{ r: 8 }}
         />
         <Line
           type="monotone"
           dataKey="brl"
-          stroke="#82ca9d"
+          stroke="#CA8A04"
         />
         <Line
           type="monotone"
           dataKey="crl"
-          stroke="#ff7300"
+          stroke="#DC2626"
         />
       </LineChart>
     </ResponsiveContainer>

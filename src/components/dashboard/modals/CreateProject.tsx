@@ -68,7 +68,8 @@ const CreateProject = ({ isOpen, onClose }: CreateProjectProps) => {
     };
 
     return (
-        <Dialog.Root open={isOpen} onOpenChange={onClose}>
+        <Dialog.Root open={isOpen} onOpenChange={onClose} /// <reference path="./CreateProject.tsx" />
+        >
 
             <Dialog.Portal forceMount>
                 <AnimatePresence mode="popLayout">

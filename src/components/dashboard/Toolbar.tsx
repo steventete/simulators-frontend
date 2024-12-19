@@ -1,63 +1,56 @@
-import { useState } from "react";
-import { File, ChartBar } from "lucide-react";
+import { File, BarChartIcon as ChartBar } from 'lucide-react';
 import CreateProject from "../dashboard/modals/CreateProject";
 import EvaluateProject from "./modals/EvaluateProject";
+import { ToolbarButton } from "./ToolbarButton";
+import { useModal } from "../../hooks/useModal";
 
-const functions = [
+const toolbarItems = [
   {
     name: "Nuevo proyecto",
     icon: File,
     action: "create",
+    ariaLabel: "Crear nuevo proyecto",
   },
   {
     name: "Evaluar proyecto",
     icon: ChartBar,
     action: "evaluate",
+    ariaLabel: "Evaluar proyecto existente",
   },
 ];
 
-function Toolbar() {
-  const [isCreateProjectModalOpen, setCreateProjectModalOpen] = useState(false);
-  const [isEvaluateProjectModalOpen, setEvaluateProjectModalOpen] =
-    useState(false);
-
-  const handleEvaluateModalClose = () => {
-    setEvaluateProjectModalOpen(false);
-  };
+export default function Toolbar() {
+  const [createProjectModal, openCreateProject, closeCreateProject] = useModal();
+  const [evaluateProjectModal, openEvaluateProject, closeEvaluateProject] = useModal();
 
   const handleButtonClick = (action: string) => {
     if (action === "create") {
-      setCreateProjectModalOpen(true);
+      openCreateProject();
     } else if (action === "evaluate") {
-      setEvaluateProjectModalOpen(true);
+      openEvaluateProject();
     }
   };
 
   return (
-    <div className="flex justify-center items-center w-full">
-      <div className="flex max-lg:ml-auto space-x-4">
-        {functions.map((func, index) => (
-          <div key={index} className="flex items-center">
-            <button
-              onClick={() => handleButtonClick(func.action)}
-              className="px-4 flex items-center gap-2 justify-center py-2 text-sm rounded-md font-bold text-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-blue-600"
-            >
-              <func.icon size={24} />
-              {func.name}
-            </button>
-          </div>
-        ))}
+    <nav className="w-auto py-4 px-6 bg-blue-500 shadow-md rounded-md">
+      <div className="max-w-7xl mx-auto flex justify-center items-center">
+        <ul className="flex space-x-4">
+          {toolbarItems.map((item) => (
+            <li key={item.action}>
+              <ToolbarButton
+                icon={item.icon}
+                onClick={() => handleButtonClick(item.action)}
+                ariaLabel={item.ariaLabel}
+              >
+                {item.name}
+              </ToolbarButton>
+            </li>
+          ))}
+        </ul>
       </div>
-      <CreateProject
-        isOpen={isCreateProjectModalOpen}
-        onClose={() => setCreateProjectModalOpen(false)}
-      />
-      <EvaluateProject
-        isOpen={isEvaluateProjectModalOpen}
-        onClose={handleEvaluateModalClose}
-      />
-    </div>
+      <CreateProject isOpen={createProjectModal} onClose={closeCreateProject} />
+      <EvaluateProject isOpen={evaluateProjectModal} onClose={closeEvaluateProject} />
+    </nav>
   );
 }
 
-export default Toolbar;
